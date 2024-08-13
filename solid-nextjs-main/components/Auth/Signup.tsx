@@ -22,7 +22,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:8000/hosting/users/',
+        'http://localhost:8000/hosting/register/',
         data,
         {
           headers: {

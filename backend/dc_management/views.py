@@ -7,12 +7,51 @@ from django.db.models import Q
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import authenticate, login, logout
+from rest_framework_simplejwt.tokens import RefreshToken
 
+from .serializers import RegisterSerializer, LoginSerializer
+from django.contrib.auth import get_user_model
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import RegisterSerializer, LoginSerializer
+from django.contrib.auth import get_user_model
 
-class UserViewSet(viewsets.ModelViewSet):
+User = get_user_model()
+
+class RegisterViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = RegisterSerializer
+    
 
+
+class LoginViewSet(viewsets.ViewSet):
+    def create(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.validated_data
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            return Response({
+                'refresh': str(refresh),
+                'access': access_token
+            }, status=status.HTTP_200_OK)
+        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LogoutViewSet(viewsets.ViewSet):
+    def create(self, request):
+        try:
+            refresh_token = request.data.get('refresh')
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({'message': 'Logout successful.'}, status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 """class DataCenterViewSet(viewsets.ModelViewSet):

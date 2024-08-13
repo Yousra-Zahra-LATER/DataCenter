@@ -4,7 +4,19 @@ from . import views
 from django.urls import path
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'register', RegisterViewSet, basename='register')
+router.register(r'login', LoginViewSet, basename='login')
+router.register(r'logout', LogoutViewSet, basename='logout')
+
+
+urlpatterns = [
+   
+]
+
+urlpatterns += router.urls
+
+
+
 
 """router.register(r'datacenters', DataCenterViewSet)"""
 """router.register(r'racks', RackViewSet)
@@ -21,8 +33,3 @@ router.register(r'switchs', SwitchViewSet)
 router.register(r'routeurs', RouteurViewSet)
 router.register(r'firewalls', FirewallViewSet)
 router.register(r'vlanlinks', VlanLinkViewSet)"""
-urlpatterns = [
-   
-]
-
-urlpatterns += router.urls
