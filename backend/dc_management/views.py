@@ -24,24 +24,61 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class RegisterViewSet(viewsets.ModelViewSet):
+class RegisterView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     
 
 
-class LoginViewSet(viewsets.ViewSet):
-    def create(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.validated_data
-            refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            return Response({
-                'refresh': str(refresh),
-                'access': access_token
-            }, status=status.HTTP_200_OK)
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+@api_view(['POST'])
+def LoginView(request):
+    print("LoginView called")  # Indique que la vue a été appelée
+    
+    serializer = LoginSerializer(data=request.data)
+    if serializer.is_valid():
+        print("Serializer is valid")  # Indique que les données sont valides
+        
+        email = serializer.validated_data.get('email')
+        password = serializer.validated_data.get('password')
+        print(f"Email: {email}, Password: {password}")  # Affiche l'email et le mot de passe reçus
+        
+        try:
+            user1 = User.objects.get(email=email)
+            print(f"User found: {user1.password}")  # Affiche le prénom de l'utilisateur trouvé
+            if user1.password == password:
+              print("Password is correct")
+            else:
+              print("Password is incorrect")
+        except User.DoesNotExist:
+            print("User with this email does not exist")  # Si l'utilisateur n'existe pas
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+        # Authentifier l'utilisateur
+        user = authenticate(request, email=email, password=password)
+        
+        if user is None:
+            print("Authentication failed")  # Indique que l'authentification a échoué
+            return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        print(f"User authenticated: {user.email}")  # Affiche l'email de l'utilisateur authentifié
+        
+        # Vérifier le statut de l'utilisateur
+        if not user.is_active:
+            print("User account is not active")  # Indique que le compte de l'utilisateur est inactif
+            return Response({"detail": "Account is not active."}, status=status.HTTP_403_FORBIDDEN)
+
+        # Préparer la réponse en fonction du rôle
+        response_data = {
+            'role': user.role,
+            'email': user.email,
+        }
+
+        print("Returning success response")  # Indique que la réponse de succès est sur le point d'être retournée
+        return Response(response_data, status=status.HTTP_200_OK)
+    
+    print("Serializer is not valid:", serializer.errors)  # Affiche les erreurs du sérialiseur
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutViewSet(viewsets.ViewSet):
     def create(self, request):

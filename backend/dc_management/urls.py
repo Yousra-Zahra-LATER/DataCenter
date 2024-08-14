@@ -4,13 +4,12 @@ from . import views
 from django.urls import path
 
 router = DefaultRouter()
-router.register(r'register', RegisterViewSet, basename='register')
-router.register(r'login', LoginViewSet, basename='login')
+router.register(r'register', RegisterView, basename='register')
 router.register(r'logout', LogoutViewSet, basename='logout')
 
 
 urlpatterns = [
-   
+      path('login/', LoginView, name='login'),
 ]
 
 urlpatterns += router.urls

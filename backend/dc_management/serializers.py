@@ -3,17 +3,15 @@ from .models import *
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model, authenticate
-
 # Récupère le modèle utilisateur personnalisé ou le modèle utilisateur par défaut de Django.
 User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'city', 'phone', 'role', 'status')
+        fields = ('email', 'password', 'first_name', 'last_name', 'city', 'phone', 'role')
         extra_kwargs = {
-            'password': {'write_only': True},
-            'status': {'read_only': True},
+            'password': {'write_only': True},   
             'role': {'read_only': True},
         }
 
@@ -23,10 +21,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password')
-        validated_data.setdefault('status', 'notApproved')
+        #validated_data['last_login'] = datetime.now()
         validated_data.setdefault('role', 'client')
         user = User(**validated_data)
-        user.password = password  # Stocke le mot de passe en clair (non recommandé)
+        user.set_password(password)  # Hachage du mot de passe avant le stockage
         user.save()
         return user
 
@@ -34,14 +32,7 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
-    def validate(self, data):
-        email = data.get('email')
-        password = data.get('password')
-        user = authenticate(email=email, password=password)  # Authentifie l'utilisateur.
-        if user is None:
-            raise serializers.ValidationError("Unable to log in with provided credentials.")
-        return user  # Retourne l'utilisateur authentifié.
-
+   
 '''class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

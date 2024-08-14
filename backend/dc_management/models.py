@@ -28,20 +28,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('client', 'Client'),
         ('commercial', 'Commercial'),
     ]
-    STATUS_CHOICES = [
-        ('notApproved', 'Not Approved'),
-        ('approved', 'Approved')
-    ]
-
-    email = models.EmailField(unique=True)
+    email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     city = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='client')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='notApproved')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+   
 
     objects = UserManager()
 

@@ -99,11 +99,15 @@ WSGI_APPLICATION = 'hosting.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'mydatabase',  # Le nom de votre base de données
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017/',  # URL de connexion pour MongoDB local
+            'port': 27017,  # Le port par défaut pour MongoDB
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -187,3 +191,7 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success",
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
