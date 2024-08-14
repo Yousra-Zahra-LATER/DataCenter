@@ -12,9 +12,10 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
-
+import { FcCustomerSupport } from "react-icons/fc";
 const _nav = [
   {
     component: CNavItem,
@@ -25,6 +26,24 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'Services',
+    to: '/service', // Assurez-vous que ce chemin est correct
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Account',
+    to: '/account', // Assurez-vous que ce chemin est correct
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Support',
+    to: '/support', // Assurez-vous que ce chemin est correct
+    icon: <FcCustomerSupport />,
   },
   {
     component: CNavTitle,
