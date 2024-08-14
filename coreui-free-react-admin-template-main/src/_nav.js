@@ -16,23 +16,36 @@ import {
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 import { FcCustomerSupport } from "react-icons/fc";
+const services = [
+  { name: 'Hosting Web',to:'/notifications/badges'},
+  { name: 'VPS',to:'/service/vps' },
+  { name: 'VPC',to:'/service/vpc' },
+  
+];
+
 const _nav = [
   {
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
+    //badge: {
+    //  color: 'info',
+    //  text: 'NEW',
+    //},
   },
+ 
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Services',
-    to: '/service', // Assurez-vous que ce chemin est correct
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: services.map((service) => ({
+      component: CNavItem,
+      name: service.name, // Use service.name or whatever property represents the name of the service
+      to: service.to,
+    })),
   },
+ 
   {
     component: CNavItem,
     name: 'Account',
@@ -324,6 +337,7 @@ const _nav = [
     href: 'https://coreui.io/react/docs/templates/installation/',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
+
 ]
 
 export default _nav
