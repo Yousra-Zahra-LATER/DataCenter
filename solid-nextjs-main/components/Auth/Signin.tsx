@@ -21,7 +21,7 @@ const Signin = () => {
       const response = await axios.post('http://localhost:8000/hosting/login/', data);
       console.log("b3at request ")
       const { role } = response.data;
-      console.log("jab data w role howa   ", role)
+      console.log("jab data w role howa", role)
       // Redirect based on the role
       if (role === 'client') {
         console.log("dkhal raho client ")
