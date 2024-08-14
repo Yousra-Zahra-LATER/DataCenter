@@ -5,11 +5,12 @@ from django.urls import path
 
 router = DefaultRouter()
 router.register(r'register', RegisterView, basename='register')
-router.register(r'logout', LogoutViewSet, basename='logout')
+#router.register(r'logout', LogoutViewSet, basename='logout')
 
 
 urlpatterns = [
       path('login/', LoginView, name='login'),
+      path('logout/', logout_view, name='logout'),
 ]
 
 urlpatterns += router.urls

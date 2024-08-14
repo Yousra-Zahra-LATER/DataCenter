@@ -76,7 +76,16 @@ def LoginView(request):
     print("Serializer is not valid:", serializer.errors)  # Affiche les erreurs du sérialiseur
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class LogoutViewSet(viewsets.ViewSet):
+
+@api_view(['POST'])
+def logout_view(request):
+    try:
+        logout(request)
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+"""class LogoutViewSet(viewsets.ViewSet):
     def create(self, request):
         try:
             refresh_token = request.data.get('refresh')
@@ -84,10 +93,12 @@ class LogoutViewSet(viewsets.ViewSet):
             token.blacklist()
             return Response({'message': 'Logout successful.'}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)"""
 
 
 """class DataCenterViewSet(viewsets.ModelViewSet):
+
+
     queryset = DataCenter.objects.all()
     serializer_class = DataCenterSerializer"""
     
