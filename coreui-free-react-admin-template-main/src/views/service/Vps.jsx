@@ -148,7 +148,7 @@ export default function VPSOffers() {
   <span className="m-5">You can Customize Your Own VPS</span>
 </div>
 
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-8">
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-8">
           Choose Your VPS Location
         </h2>
         <CRow className="justify-center ">
