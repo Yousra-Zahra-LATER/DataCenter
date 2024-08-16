@@ -20,7 +20,10 @@ const services = [
   { name: 'Hosting Web',to:'/notifications/badges'},
   { name: 'VPS',to:'/service/vps' },
   { name: 'VPC',to:'/service/vpc' },
-  
+  { name: 'Backup',to:'/service/vpc' },
+  { name: 'Object Storage',to:'/service/vpc' },
+  { name: 'DNS',to:'/service/vpc' },
+  { name: 'Messagerie',to:'/service/vpc' },
 ];
 
 const _nav = [
