@@ -4,10 +4,22 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
+//Account
+const Account = React.lazy(() => import('./views/account/Account'))
+
+//Support
+const Support = React.lazy(() => import('./views/support/Support'))
+
+
 //Service 
 const Service = React.lazy(() => import('./views/service/Service'))
+const HostingWeb = React.lazy(() => import('./views/service/HostingWeb'))
 const Vps = React.lazy(() => import('./views/service/Vps'))
 const Vpc = React.lazy(() => import('./views/service/Vpc'))
+const Backup = React.lazy(() => import('./views/service/Backup'))
+const ObjectStorage = React.lazy(() => import('./views/service/ObjectStorage'))
+const DNS = React.lazy(() => import('./views/service/DNS'))
+const MAIL = React.lazy(() => import('./views/service/MAIL'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -58,9 +70,16 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/account', name: 'Account', element: Account },
+  { path: '/support', name: 'Support', element: Support },
   { path: '/service', name: 'Service', element: Service , exact: true },
+  { path: '/service/hostingweb', name: 'Hosting Web', element: HostingWeb },
   { path: '/service/vps', name: 'Vps', element: Vps },
   { path: '/service/vpc', name: 'Vpc', element: Vpc },
+  { path: '/service/backup', name: 'Backup', element: Backup },
+  { path: '/service/objectstorage', name: 'ObjectStorage', element: ObjectStorage },
+  { path: '/service/DNS', name: 'DNS', element: DNS },
+  { path: '/service/MAIL', name: 'MAIL', element: MAIL },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
