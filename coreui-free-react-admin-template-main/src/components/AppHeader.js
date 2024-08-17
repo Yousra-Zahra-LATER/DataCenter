@@ -12,7 +12,7 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-  useColorModes,
+  useColorModes,CTooltip
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -22,9 +22,8 @@ import {
   cilList,
   cilMenu,
   cilMoon,
-  cilSun,
+  cilSun,cilInbox
 } from '@coreui/icons'
-
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 
@@ -65,21 +64,25 @@ const AppHeader = () => {
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-auto">
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
+          
           <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilEnvelopeOpen} size="lg" />
             </CNavLink>
           </CNavItem>
+         
+    <CNavItem>
+    <CTooltip content="View my tickets" placement="bottom">
+
+      <CNavLink href="#">
+        <CIcon  icon={cilInbox} size="lg" />
+      </CNavLink>
+      </CTooltip>
+    </CNavItem>
+   
+ 
+
+  
         </CHeaderNav>
         <CHeaderNav>
           <li className="nav-item py-1">
