@@ -25,7 +25,7 @@ const services = [
     name: 'VPS',
     to: '/service/vps',
     items: [
-      { name: 'Standard', to: '/service/vps/standard' },
+      { name: 'Standard', to: '/service/vps' },
       { name: 'Performance', to: '/service/vps/performance' },
       { name: 'Storage', to: '/service/vps/premium' },
     ],
@@ -34,7 +34,7 @@ const services = [
   { name: 'Backup', to: '/service/backup' },
   { name: 'Object Storage', to: '/service/objectstorage' },
   { name: 'DNS', to: '/service/DNS' },
-  { name: 'MAIL', to: '/service/MAIL' },
+  { name: 'Email', to: '/service/MAIL' },
 ];
 
 const _nav = [

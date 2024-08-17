@@ -1,4 +1,4 @@
-import React, { memo, useState,useEffect } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import {
   CCard,
   CCardBody,
@@ -12,21 +12,21 @@ import {
   CContainer,
   CFormInput,
   CCallout,
-  CTab,CTabs,
+  CTab,
+  CTabs,
   CTabList,
   CTabPanel,
   CTooltip,
   CLink,
   CTabContent,
   CTableBody,
-  CTableHeaderCell,CTable,CTableRow
-
+  CTableHeaderCell,
+  CTable,
+  CTableRow,
 } from '@coreui/react'
 import { FaCheckCircle, FaMapMarkerAlt } from 'react-icons/fa'
-import {
-    CTableHead,  CTableDataCell
-  } from '@coreui/react'; 
-  
+import { CTableHead, CTableDataCell } from '@coreui/react'
+
 const VPSOfferCard = memo(({ offer }) => {
   const isRecommended = offer.title === 'Recommended'
 
@@ -147,54 +147,54 @@ export default function VPSOffers() {
     setSelectedLocation(location)
   }
 
-
-
-
-  const [selectedCPU, setSelectedCPU] = useState(null);
-  const [selectedRAM, setSelectedRAM] = useState(null);
-  const [selectedStorage, setSelectedStorage] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  const [selectedCPU, setSelectedCPU] = useState(null)
+  const [selectedRAM, setSelectedRAM] = useState(null)
+  const [selectedStorage, setSelectedStorage] = useState(null)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [quantity, setQuantity] = useState(1)
 
   const cpuOptions = [
     { id: 1, cores: '2 Cores', price: 10 },
     { id: 2, cores: '4 Cores', price: 20 },
     { id: 3, cores: '8 Cores', price: 40 },
-  ];
+  ]
 
   const ramOptions = [
     { id: 1, ram: '4 GB', price: 5 },
     { id: 2, ram: '8 GB', price: 10 },
     { id: 3, ram: '16 GB', price: 20 },
-  ];
- 
+  ]
+
   const storageOptions = [
     { id: 1, storage: '100 GB NVme', price: 5 },
     { id: 2, storage: '250 GB NVme', price: 10 },
     { id: 3, storage: '500 GB NVme', price: 20 },
-  ];
+  ]
 
   // Fonction pour calculer le prix total en fonction des sélections
   useEffect(() => {
-    const cpuPrice = selectedCPU ? cpuOptions.find(option => option.id === selectedCPU).price : 0;
-    const ramPrice = selectedRAM ? ramOptions.find(option => option.id === selectedRAM).price : 0;
-    const storagePrice = selectedStorage ? storageOptions.find(option => option.id === selectedStorage).price : 0;
+    const cpuPrice = selectedCPU ? cpuOptions.find((option) => option.id === selectedCPU).price : 0
+    const ramPrice = selectedRAM ? ramOptions.find((option) => option.id === selectedRAM).price : 0
+    const storagePrice = selectedStorage
+      ? storageOptions.find((option) => option.id === selectedStorage).price
+      : 0
 
-    setTotalPrice((cpuPrice + ramPrice + storagePrice) * quantity);
-  }, [selectedCPU, selectedRAM, selectedStorage, quantity]);
+    setTotalPrice((cpuPrice + ramPrice + storagePrice) * quantity)
+  }, [selectedCPU, selectedRAM, selectedStorage, quantity])
 
-  const handleSelectCPU = (id) => setSelectedCPU(id);
-  const handleSelectRAM = (id) => setSelectedRAM(id);
-  const handleSelectStorage = (id) => setSelectedStorage(id);
+  const handleSelectCPU = (id) => setSelectedCPU(id)
+  const handleSelectRAM = (id) => setSelectedRAM(id)
+  const handleSelectStorage = (id) => setSelectedStorage(id)
 
-  const incrementQuantity = () => setQuantity(prevQty => prevQty + 1);
+  const incrementQuantity = () => setQuantity((prevQty) => prevQty + 1)
   const decrementQuantity = () => {
-    if (quantity > 1) setQuantity(prevQty => prevQty - 1);
-  };
+    if (quantity > 1) setQuantity((prevQty) => prevQty - 1)
+  }
 
   return (
     <>
       <CContainer>
+      
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-8">
           Choose the right plan for your big plans
         </h2>
@@ -217,19 +217,18 @@ export default function VPSOffers() {
         </div>
       </CContainer>
       <CContainer>
-      <CCallout className='font-semibold text-gray-900 shadow-lg'
-        color="info"
-        style={{
+        <CCallout
+          className="font-semibold text-gray-900 shadow-lg"
+          color="info"
+          style={{
             backgroundColor: '#F3F4F7',
             borderRadius: '0px',
-            borderLeftColor:'blue',
-            
+            borderLeftColor: 'blue',
           }}
-      >
-        
-        We offer a variety of VPS configurations. Customize yours to fit your needs and get the best
-        performance for your applications.
-      </CCallout>
+        >
+          We offer a variety of VPS configurations. Customize yours to fit your needs and get the
+          best performance for your applications.
+        </CCallout>
       </CContainer>
       {/* Map and ISO Selection Section */}
       <CContainer className="mt-10 px-4 flex flex-col lg:flex-row gap-4">
@@ -289,15 +288,20 @@ export default function VPSOffers() {
           </CCard>
         </div>
       </CContainer>
-    {/* toute la partie précedente donctione normal et quand jajoute  cette partie le code ne fonctionne pas  */}
+      {/* toute la partie précedente donctione normal et quand jajoute  cette partie le code ne fonctionne pas  */}
       <CContainer className="my-5 px-4">
         <h2 className="text-xl text-gray-700 mb-8">Choose Your VPS Configuration</h2>
         <CTabs activeItemKey={1}>
           <CTabList variant="underline">
-        
-            <CTab aria-controls="cpu-tab-pane" itemKey={1}>CPU</CTab>
-            <CTab aria-controls="ram-tab-pane" itemKey={2}>RAM</CTab>
-            <CTab aria-controls="storage-tab-pane" itemKey={3}>Storage</CTab>
+            <CTab aria-controls="cpu-tab-pane" itemKey={1}>
+              CPU
+            </CTab>
+            <CTab aria-controls="ram-tab-pane" itemKey={2}>
+              RAM
+            </CTab>
+            <CTab aria-controls="storage-tab-pane" itemKey={3}>
+              Storage
+            </CTab>
           </CTabList>
           <CTabContent>
             <CTabPanel className="py-3" aria-labelledby="cpu-tab-pane" itemKey={1}>
@@ -314,7 +318,9 @@ export default function VPSOffers() {
                       key={option.id}
                       active={selectedCPU === option.id}
                       onClick={() => handleSelectCPU(option.id)}
-                      className={selectedCPU === option.id ? 'table-active bg-primary text-white' : ''}
+                      className={
+                        selectedCPU === option.id ? 'table-active bg-primary text-white' : ''
+                      }
                     >
                       <CTableDataCell>{option.cores}</CTableDataCell>
                       <CTableDataCell>${option.price}/month</CTableDataCell>
@@ -337,7 +343,9 @@ export default function VPSOffers() {
                       key={option.id}
                       active={selectedRAM === option.id}
                       onClick={() => handleSelectRAM(option.id)}
-                      className={selectedRAM === option.id ? 'table-active bg-primary text-white' : ''}
+                      className={
+                        selectedRAM === option.id ? 'table-active bg-primary text-white' : ''
+                      }
                     >
                       <CTableDataCell>{option.ram}</CTableDataCell>
                       <CTableDataCell>${option.price}/month</CTableDataCell>
@@ -360,7 +368,9 @@ export default function VPSOffers() {
                       key={option.id}
                       active={selectedStorage === option.id}
                       onClick={() => handleSelectStorage(option.id)}
-                      className={selectedStorage === option.id ? 'table-active bg-primary text-white' : ''}
+                      className={
+                        selectedStorage === option.id ? 'table-active bg-primary text-white' : ''
+                      }
                     >
                       <CTableDataCell>{option.storage}</CTableDataCell>
                       <CTableDataCell>${option.price}/month</CTableDataCell>
@@ -374,34 +384,34 @@ export default function VPSOffers() {
       </CContainer>
 
       {/* Fixed bottom div with price counter and quantity */}
-      <div
-        className="fixed bottom-0 left-0 w-full bg-gray-100 p-4 shadow-lg"
-      >
-        
-          <div className="flex justify-end items-center gap-16 ">
-            <div className="flex items-center  ">
-              <div>
-                <h8>VPS Qty:</h8>
-                <div className="flex items-center gap-2">
-                  <CButton onClick={decrementQuantity} color="secondary" disabled={quantity <= 1}>-</CButton>
-                  <span>{quantity}</span>
-                  <CButton onClick={incrementQuantity} color="secondary">+</CButton>
-                </div>
+      <div className="fixed bottom-0 left-0 w-full bg-gray-400 p-2 shadow-lg">
+        <div className="flex justify-end items-center gap-16 ">
+          <div className="flex items-center  ">
+            <div>
+              <h8>VPS Qty:</h8>
+              <div className="flex items-center gap-2">
+                <CButton onClick={decrementQuantity} color="secondary" disabled={quantity <= 1}>
+                  -
+                </CButton>
+                <span>{quantity}</span>
+                <CButton onClick={incrementQuantity} color="secondary">
+                  +
+                </CButton>
               </div>
             </div>
-            <div>
-            <h4>Total Price: ${totalPrice}/month</h4>
-            </div>
-            <div className=''>
-             
-              <CButton color="info" size="lg">
-                Order
-              </CButton>
-            </div>
           </div>
-      
+          <div>
+            <h4>Total Price: ${totalPrice}/month</h4>
+          </div>
+          <div className=" ">
+          <button 
+      className="bg-lime-300 hover:bg-green-800  transition-colors duration-300 text-black px-5 py-2.5 rounded-none"
+    >
+      Order Now
+    </button>
+            </div>
+        </div>
       </div>
-
     </>
   )
 }

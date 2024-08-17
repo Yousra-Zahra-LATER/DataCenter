@@ -18,10 +18,13 @@ import {
   CRow,
   CCol,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilTrash } from '@coreui/icons';
 
 const Support = () => {
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [confirmationVisible, setConfirmationVisible] = useState(false); // Nouveau state pour le modal de confirmation
   const [subject, setSubject] = useState('');
   const [product, setProduct] = useState('');
   const [description, setDescription] = useState('');
@@ -30,6 +33,7 @@ const Support = () => {
     product: '',
     description: '',
   });
+  const [ticketToDelete, setTicketToDelete] = useState(null); // Index du ticket à supprimer
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -67,6 +71,18 @@ const Support = () => {
     }
   };
 
+  const confirmDeleteTicket = (index) => {
+    setTicketToDelete(index);
+    setConfirmationVisible(true);
+  };
+
+  const handleDeleteTicket = () => {
+    const updatedTickets = tickets.filter((_, i) => i !== ticketToDelete);
+    setTickets(updatedTickets);
+    setConfirmationVisible(false);
+    setTicketToDelete(null);
+  };
+
   return (
     <CContainer className="mt-4">
       <CRow className="justify-content-between align-items-center mb-3">
@@ -86,12 +102,13 @@ const Support = () => {
             <CTableHeaderCell scope="col">Subject</CTableHeaderCell>
             <CTableHeaderCell scope="col">Last Reply</CTableHeaderCell>
             <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {tickets.length === 0 ? (
             <CTableRow>
-              <CTableDataCell colSpan="3" className="text-center">
+              <CTableDataCell colSpan="4" className="text-center">
                 No Tickets Found
               </CTableDataCell>
             </CTableRow>
@@ -101,14 +118,34 @@ const Support = () => {
                 <CTableDataCell>{ticket.subject}</CTableDataCell>
                 <CTableDataCell>{ticket.lastReply}</CTableDataCell>
                 <CTableDataCell>{ticket.status}</CTableDataCell>
+                <CTableDataCell>
+                  <span
+                    onClick={() => confirmDeleteTicket(index)}
+                    style={{ cursor: 'pointer', color: 'red', marginLeft: '10px' }}
+                  >
+                    <CIcon icon={cilTrash} />
+                  </span>
+                </CTableDataCell>
               </CTableRow>
             ))
           )}
         </CTableBody>
       </CTable>
 
-      {/* Modal */}
-      <CModal visible={modalVisible} onClose={() => setModalVisible(false)}  backdrop="static">
+      {/* Modal de confirmation */}
+      <CModal visible={confirmationVisible} onClose={() => setConfirmationVisible(false)} backdrop="static">
+        <CModalHeader>Confirmation</CModalHeader>
+        <CModalBody>
+          Êtes-vous sûr de vouloir supprimer ce ticket ?
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setConfirmationVisible(false)}>Annuler</CButton>
+          <CButton color="danger" onClick={handleDeleteTicket}>Supprimer</CButton>
+        </CModalFooter>
+      </CModal>
+
+      {/* Modal d'ajout de ticket */}
+      <CModal visible={modalVisible} onClose={() => setModalVisible(false)} backdrop="static">
         <CModalHeader>Open New Ticket</CModalHeader>
         <CModalBody>
           <CFormInput
