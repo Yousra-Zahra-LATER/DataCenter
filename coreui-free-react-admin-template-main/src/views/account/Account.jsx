@@ -113,9 +113,13 @@ const AccountUpdate = () => {
             </div>
 
             {/* Bouton de soumission */}
-            <CButton color="primary" type="submit" className="mt-3">
-             Update
-            </CButton>
+            <CRow className="text-end">
+              <CCol>
+                <CButton color="primary" type="submit" className="mt-3 rounded-0 px-5">
+                  Update Profile
+                </CButton>
+              </CCol>
+            </CRow>
           </CForm>
         </CCardBody>
       </CCard>

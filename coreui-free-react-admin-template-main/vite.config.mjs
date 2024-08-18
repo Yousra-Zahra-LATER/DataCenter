@@ -37,7 +37,7 @@ export default defineConfig(() => {
           replacement: `${path.resolve(__dirname, 'src')}/`,
         },
       ],
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss','jsx','css'],
     },
     server: {
       port: 3000,
