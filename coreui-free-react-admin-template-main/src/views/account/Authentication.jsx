@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   CForm,
-  CFormLabel,
   CFormInput,
   CButton,
   CCard,
@@ -33,36 +32,41 @@ const ChangePassword = () => {
 
     // Validate current password
     if (currentPassword !== CURRENT_PASSWORD) {
-      setError("Le mot de passe actuel est incorrect.");
+      setError("Unable to update password: Current password is invalid.");
+      // Clear the form fields
+      resetForm();
       return;
     }
 
-    // Validate new password match
-    if (newPassword !== confirmNewPassword) {
-      setError("Le nouveau mot de passe et la confirmation ne correspondent pas.");
+    // If there's an error with any field, clear the form and display the error
+    if (!newPassword || !confirmNewPassword) {
+      setError("Unable to update password: Please fill out all fields.");
+      resetForm();
       return;
     }
 
     // Successful password change
     setSuccess("Le mot de passe a été changé avec succès !");
+    resetForm();
+  };
 
-    // Clear the form fields
+  // Function to reset the form fields and reload the component
+  const resetForm = () => {
     setCurrentPassword("");
     setNewPassword("");
     setConfirmNewPassword("");
   };
 
   return (
-<CContainer className="mt-4 mb-5">
+    <CContainer className="mt-4 mb-5">
       <CRow className="justify-content-center">
-        <CCol md="8" >
+        <CCol md="8">
           <CCard className="mt-4">
             <CCardBody>
-              <h5 className="mb-4">Change Password</h5>
+              <h5 className="mb-4">Changer le Mot de Passe</h5>
               <CForm onSubmit={handleSubmit}>
                 {/* Current Password */}
                 <div className="mb-4">
-                  
                   <CFormInput
                     type="password"
                     id="currentPassword"
@@ -75,7 +79,6 @@ const ChangePassword = () => {
 
                 {/* New Password */}
                 <div className="mb-4">
-                 
                   <CFormInput
                     type="password"
                     id="newPassword"
@@ -88,7 +91,6 @@ const ChangePassword = () => {
 
                 {/* Confirm New Password */}
                 <div className="mb-4">
-                
                   <CFormInput
                     type="password"
                     id="confirmNewPassword"
@@ -106,14 +108,13 @@ const ChangePassword = () => {
                 {success && <CAlert color="success">{success}</CAlert>}
 
                 {/* Submit Button */}
-                
-            <CRow className="text-center">
-              <CCol>
-                <CButton color="primary" type="submit" className="mt-3 rounded-0 px-5">
-                Change Password
-                </CButton>
-              </CCol>
-            </CRow>
+                <CRow className="text-center">
+                  <CCol>
+                    <CButton color="primary" type="submit" className="mt-3 rounded-0 px-5">
+                      Changer le Mot de Passe
+                    </CButton>
+                  </CCol>
+                </CRow>
               </CForm>
             </CCardBody>
           </CCard>
