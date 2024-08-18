@@ -84,7 +84,7 @@ const Support = () => {
   };
 
   return (
-    <CContainer className="mt-4">
+    <CContainer className="mt-2">
       <CRow className="justify-content-between align-items-center mb-3">
         <CCol className="mb-4">
           <h2 style={{ fontSize: '22px' }}>Support Tickets</h2>
