@@ -1,15 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+export default {
+
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  
   theme: {
-    extend: {
-      colors: {
-        'custom-color': '#B4E380',  // Nom de la couleur personnalisée et sa valeur hex
-        'custom-success': '#88D66C',
-      },
-    },
+    extend: {},
   },
   plugins: [],
-}
+};

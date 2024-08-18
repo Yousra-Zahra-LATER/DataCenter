@@ -6,6 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 //Account
 const Account = React.lazy(() => import('./views/account/Account'))
+const Authentication = React.lazy(() => import('./views/account/Authentication'))
 
 //Support
 const Support = React.lazy(() => import('./views/support/Support'))
@@ -71,8 +72,8 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/account', name: 'Account', element: Account },
+  { path: '/authentication', name: 'Authentication', element: Authentication },
   { path: '/support', name: 'Support', element: Support },
-  { path: '/service', name: 'Service', element: Service , exact: true },
   { path: '/service/hostingweb', name: 'Hosting Web', element: HostingWeb },
   { path: '/service/vps', name: 'Vps', element: Vps },
   { path: '/service/vpc', name: 'Vpc', element: Vpc },

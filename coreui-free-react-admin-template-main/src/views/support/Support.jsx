@@ -96,7 +96,7 @@ const Support = () => {
           </CButton>
         </CCol>
       </CRow>
-      <CTable hover responsive>
+      <CTable hover responsive  style={{ borderRadius: '0.5rem', overflow: 'hidden'}}>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">Subject</CTableHeaderCell>

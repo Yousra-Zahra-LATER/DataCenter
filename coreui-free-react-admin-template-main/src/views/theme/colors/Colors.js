@@ -81,6 +81,7 @@ const Colors = () => {
             <ThemeColor className="bg-dark">
               <h6>Brand Dark Color</h6>
             </ThemeColor>
+           
           </CRow>
         </CCardBody>
       </CCard>

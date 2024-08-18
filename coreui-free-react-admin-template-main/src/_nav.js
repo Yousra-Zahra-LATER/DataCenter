@@ -11,14 +11,13 @@ import {
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
-  cilStar,cilUser,cilContact
-  
+  cilStar, cilUser, cilContact
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 import { RiCustomerService2Line } from "react-icons/ri";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { LuLayoutDashboard } from "react-icons/lu";
 
-import {LuLayoutDashboard} from "react-icons/lu";
 const services = [
   { name: 'Hosting Web', to: '/service/hostingweb' },
   {
@@ -37,21 +36,24 @@ const services = [
   { name: 'Email', to: '/service/MAIL' },
 ];
 
+const account = [
+  { name: 'Profile', to: '/account' },
+  { name: 'Authentication', to: '/authentication' },
+];
+
 const _nav = [
   {
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
-    icon: <LuLayoutDashboard  className='nav-icon '/>,
-
+    icon: <LuLayoutDashboard className='nav-icon' />,
   },
   {
     component: CNavGroup,
     name: 'Services',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon " />,
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: services.map((service) => {
       if (service.items) {
-        // Si le service a des sous-items, créez un groupe avec décalage pour les sous-items
         return {
           component: CNavGroup,
           name: service.name,
@@ -64,7 +66,6 @@ const _nav = [
           })),
         };
       } else {
-        // Si pas de sous-items, retournez un élément normal
         return {
           component: CNavItem,
           name: service.name,
@@ -74,18 +75,21 @@ const _nav = [
     }),
   },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Account',
-    to: '/account', // Assurez-vous que ce chemin est correct
-    icon: <MdOutlineManageAccounts  className='nav-icon '/>,
+    icon: <MdOutlineManageAccounts className='nav-icon' />,
+    items: account.map((acc) => ({
+      component: CNavItem,
+      name: acc.name,
+      to: acc.to,
+    })),
   },
   {
     component: CNavItem,
     name: 'Support',
     to: '/support', // Assurez-vous que ce chemin est correct
-    icon: <RiCustomerService2Line  className='nav-icon' />,
+    icon: <RiCustomerService2Line className='nav-icon' />,
   },
-  
-]
+];
 
-export default _nav
+export default _nav;

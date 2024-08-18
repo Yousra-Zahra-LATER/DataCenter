@@ -24,9 +24,9 @@ import {
   CTable,
   CTableRow,
 } from '@coreui/react'
+import './style.css';
 import { FaCheckCircle, FaMapMarkerAlt } from 'react-icons/fa'
 import { CTableHead, CTableDataCell } from '@coreui/react'
-
 const VPSOfferCard = memo(({ offer }) => {
   const isRecommended = offer.title === 'Recommended'
 
@@ -194,7 +194,6 @@ export default function VPSOffers() {
   return (
     <>
       <CContainer>
-      
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-8">
           Choose the right plan for your big plans
         </h2>
@@ -384,7 +383,7 @@ export default function VPSOffers() {
       </CContainer>
 
       {/* Fixed bottom div with price counter and quantity */}
-      <div className="fixed bottom-0 left-0 w-full bg-gray-400 p-2 shadow-lg">
+      <div className="fixed bottom-0 left-0 w-full bg-gray-50 p-2 shadow-lg">
         <div className="flex justify-end items-center gap-16 ">
           <div className="flex items-center  ">
             <div>
@@ -404,12 +403,11 @@ export default function VPSOffers() {
             <h4>Total Price: ${totalPrice}/month</h4>
           </div>
           <div className=" ">
-          <button 
-      className="bg-lime-300 hover:bg-green-800  transition-colors duration-300 text-black px-5 py-2.5 rounded-none"
-    >
-      Order Now
-    </button>
-            </div>
+            <button class="bg-lime-300 hover:bg-green-700  transition-colors duration-300 text-black px-5 py-2.5 text-nowrap">
+              Order Now
+            </button>
+         
+          </div>
         </div>
       </div>
     </>
