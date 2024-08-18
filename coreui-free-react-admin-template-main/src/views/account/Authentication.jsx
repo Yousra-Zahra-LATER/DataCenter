@@ -38,9 +38,9 @@ const ChangePassword = () => {
       return;
     }
 
-    // If there's an error with any field, clear the form and display the error
-    if (!newPassword || !confirmNewPassword) {
-      setError("Unable to update password: Please fill out all fields.");
+    // If the new password and confirmation do not match, clear the form and display the error
+    if (newPassword !== confirmNewPassword) {
+      setError("The passwords you entered do not match.");
       resetForm();
       return;
     }
@@ -50,7 +50,7 @@ const ChangePassword = () => {
     resetForm();
   };
 
-  // Function to reset the form fields and reload the component
+  // Function to reset the form fields
   const resetForm = () => {
     setCurrentPassword("");
     setNewPassword("");
@@ -63,7 +63,11 @@ const ChangePassword = () => {
         <CCol md="8">
           <CCard className="mt-4">
             <CCardBody>
+              {/* Success Message */}
+              {success && <CAlert color="success" className="mb-4">{success}</CAlert>}
+
               <h5 className="mb-4">Changer le Mot de Passe</h5>
+
               <CForm onSubmit={handleSubmit}>
                 {/* Current Password */}
                 <div className="mb-4">
@@ -103,9 +107,6 @@ const ChangePassword = () => {
 
                 {/* Error Message */}
                 {error && <CAlert color="danger">{error}</CAlert>}
-
-                {/* Success Message */}
-                {success && <CAlert color="success">{success}</CAlert>}
 
                 {/* Submit Button */}
                 <CRow className="text-center">
