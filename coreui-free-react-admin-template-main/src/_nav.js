@@ -1,22 +1,15 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilNotes,
-  cilPencil,
   cilPuzzle,
-  cilSpeedometer,
-  cilStar, cilUser, cilContact
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNavGroup, CNavItem } from '@coreui/react'
 import { RiCustomerService2Line } from "react-icons/ri";
-import { MdOutlineManageAccounts,MdOutlineBusiness } from "react-icons/md";
+import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { FaRegUserCircle } from "react-icons/fa";
+import { LuUserCog } from "react-icons/lu";
+import { TbShieldLock } from "react-icons/tb";
 
 const services = [
   { name: 'Hosting Web', to: '/service/hostingweb' },
@@ -37,8 +30,8 @@ const services = [
 ];
 
 const account = [
-  { name: 'Profile', to: '/account' },
-  { name: 'Authentication', to: '/authentication' },
+  { name: 'Profile', to: '/account', icon: <LuUserCog className='mr-2' size={20} /> },
+  { name: 'Authentication', to: '/authentication', icon: <TbShieldLock className='mr-2' size={20} /> },
 ];
 
 const actel = [
@@ -67,7 +60,7 @@ const _nav = [
             component: CNavItem,
             name: subItem.name,
             to: subItem.to,
-            className: '', // Utilisez Tailwind CSS pour ajouter du padding à gauche
+            className: '', 
           })),
         };
       } else {
@@ -92,17 +85,18 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Account',
-    icon: <MdOutlineManageAccounts className='nav-icon' />,
+    icon: <FaRegUserCircle className='nav-icon' />,
     items: account.map((acc) => ({
       component: CNavItem,
       name: acc.name,
       to: acc.to,
+      icon: acc.icon, // Use the icon defined in the `account` array
     })),
   },
   {
     component: CNavItem,
     name: 'Support',
-    to: '/support', // Assurez-vous que ce chemin est correct
+    to: '/support', 
     icon: <RiCustomerService2Line className='nav-icon' />,
   },
 ];
