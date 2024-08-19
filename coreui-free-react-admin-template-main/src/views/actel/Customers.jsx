@@ -23,6 +23,9 @@ const Customers = () =>  {
   const [activeKey, setActiveKey] = useState(1)
 return (
   <>
+
+
+  
   <DataTable DataList ={data} columnss ={columns} collections = {""} noAdds={false} noEdit={false}/>
   </>
 

@@ -5,7 +5,7 @@ import {
 } from '@coreui/icons'
 import { CNavGroup, CNavItem } from '@coreui/react'
 import { RiCustomerService2Line } from "react-icons/ri";
-import { MdOutlineManageAccounts } from "react-icons/md";
+import { MdOutlineManageAccounts,MdOutlineBusiness } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { LuUserCog } from "react-icons/lu";
