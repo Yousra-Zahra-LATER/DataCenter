@@ -18,7 +18,7 @@ const AccountUpdate = () => {
       <CRow className="justify-content-between align-items-center mb-3">
         <CCol className="mb-4">
           <h2 style={{ fontSize: '22px' }}>Update Profile</h2>
-          <div style={{ width: '150px', height: '1px', backgroundColor: '#4B49B6', marginTop: '9px' }}></div>
+          <div style={{ width : '150px', height: '1px', backgroundColor: '#4B49B6', marginTop: '9px' }}></div>
         </CCol>
        
       </CRow>
