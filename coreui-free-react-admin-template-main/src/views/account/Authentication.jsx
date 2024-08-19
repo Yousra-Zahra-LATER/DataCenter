@@ -10,6 +10,7 @@ import {
   CContainer,
   CAlert
 } from "@coreui/react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ChangePassword = () => {
   // Define a constant for the current password
@@ -19,6 +20,10 @@ const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  // State for visibility of passwords
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   // State for error messages
   const [error, setError] = useState("");
@@ -33,7 +38,6 @@ const ChangePassword = () => {
     // Validate current password
     if (currentPassword !== CURRENT_PASSWORD) {
       setError("Unable to update password: Current password is invalid.");
-      // Clear the form fields
       resetForm();
       return;
     }
@@ -82,27 +86,41 @@ const ChangePassword = () => {
                 </div>
 
                 {/* New Password */}
-                <div className="mb-4">
+                <div className="mb-4 position-relative">
                   <CFormInput
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     id="newPassword"
                     placeholder="Nouveau Mot de Passe"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                   />
+                  <div
+                    className="position-absolute"
+                    style={{ top: "50%", right: "10px", transform: "translateY(-50%)", cursor: "pointer" }}
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                 </div>
 
                 {/* Confirm New Password */}
-                <div className="mb-4">
+                <div className="mb-4 position-relative">
                   <CFormInput
-                    type="password"
+                    type={showConfirmNewPassword ? "text" : "password"}
                     id="confirmNewPassword"
                     placeholder="Confirmer le Nouveau Mot de Passe"
                     value={confirmNewPassword}
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                     required
                   />
+                  <div
+                    className="position-absolute"
+                    style={{ top: "50%", right: "10px", transform: "translateY(-50%)", cursor: "pointer" }}
+                    onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                  >
+                    {showConfirmNewPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                 </div>
 
                 {/* Error Message */}
