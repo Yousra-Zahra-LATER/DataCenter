@@ -8,6 +8,9 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Account = React.lazy(() => import('./views/account/Account'))
 const Authentication = React.lazy(() => import('./views/account/Authentication'))
 
+//Actel
+const Customers = React.lazy(() => import('./views/actel/Customers'))
+
 //Support
 const Support = React.lazy(() => import('./views/support/Support'))
 
@@ -81,6 +84,7 @@ const routes = [
   { path: '/service/objectstorage', name: 'ObjectStorage', element: ObjectStorage },
   { path: '/service/DNS', name: 'DNS', element: DNS },
   { path: '/service/MAIL', name: 'MAIL', element: MAIL },
+  { path: '/actel/customers', name: 'Customers', element: Customers },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

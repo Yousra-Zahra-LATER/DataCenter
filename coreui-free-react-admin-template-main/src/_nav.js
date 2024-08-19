@@ -15,7 +15,7 @@ import {
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 import { RiCustomerService2Line } from "react-icons/ri";
-import { MdOutlineManageAccounts } from "react-icons/md";
+import { MdOutlineManageAccounts,MdOutlineBusiness } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 
 const services = [
@@ -39,6 +39,11 @@ const services = [
 const account = [
   { name: 'Profile', to: '/account' },
   { name: 'Authentication', to: '/authentication' },
+];
+
+const actel = [
+  { name: 'Customers', to: '/actel/customers' },
+
 ];
 
 const _nav = [
@@ -73,6 +78,16 @@ const _nav = [
         };
       }
     }),
+  },
+  {
+    component: CNavGroup,
+    name: 'ACTEL',
+    icon: <MdOutlineBusiness className='nav-icon' />,
+    items: actel.map((act) => ({
+      component: CNavItem,
+      name: act.name,
+      to: act.to,
+    })),
   },
   {
     component: CNavGroup,
