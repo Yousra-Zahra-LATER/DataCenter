@@ -3,6 +3,8 @@ import { forwardRef } from 'react';
 import MaterialTable,{MTableEditField,AutoComplete} from 'material-table';
 import { ThemeProvider } from '@mui/styles'
 import { createTheme } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+
 
 import { AddBox, ArrowDownward,Check, 
   ChevronLeft, ChevronRight, Clear, DeleteOutline, 
@@ -11,16 +13,27 @@ import { AddBox, ArrowDownward,Check,
 
 
 
-const DataTable = (props ) => {
+const DataTableWithDialog = (props ) => {
+
 
   let [data, setData] = useState(props.DataList);
 
-  const [columns, setcolumns] = useState(props.columns);
+  const [columns, setcolumns] = useState(props.columnss);
   const [collection, setcollection] = useState(props.collections);
   const [noAdd, setnoAdd] = useState(props.noAdds);
   const [noEdit, setnoEdit] = useState(props.noEdit);
   const [selectedRow, setSelectedRow] = useState(null);
-  
+
+  const [open, setOpen] = useState(false);
+
+  const handleRowClick = (event, rowData) => {
+    setSelectedRow(rowData);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   const typeUser = props.type;
   
@@ -76,7 +89,7 @@ const DataTable = (props ) => {
       title={""}
       columns={columns}
       data={data} 
-      editable={ props.isEditable ? {
+        editable={{
           
           onRowAdd:  noAdd == false ? (newRow) => new Promise((resolve, reject) => {
             const updatedRows = [...data, { ...newRow }]
@@ -108,15 +121,11 @@ const DataTable = (props ) => {
             }, 2000)
           }) : null,
 
-        }: {}}
+        }}
 
-      
-         onRowClick={((evt, selectedRow) => {
-          setSelectedRow(selectedRow.tableData.id);
-          props.onRowSelect(selectedRow.id);
-         })}
+        onRowClick={handleRowClick}
         options={{
-          actionsColumnIndex: -1, addRowPosition: "first",columnsButton: true,  grouping: props.isgrouping, exportButton: true, sorting: true,
+          actionsColumnIndex: -1, addRowPosition: "first",columnsButton: true, grouping: true,exportButton: true, sorting: true,
           rowStyle: rowData => ({
             backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
           }),
@@ -177,8 +186,26 @@ const DataTable = (props ) => {
      
       />
       </ThemeProvider>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Détails</DialogTitle>
+        <DialogContent>
+          {selectedRow && (
+            <div>
+              <p><strong>Nom:</strong> {selectedRow.name}</p>
+              <p><strong>Âge:</strong> {selectedRow.age}</p>
+              <p><strong>Ville:</strong> {selectedRow.city}</p>
+            </div>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
 
-export default DataTable;
+export default DataTableWithDialog;

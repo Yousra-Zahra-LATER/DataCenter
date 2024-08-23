@@ -1,189 +1,189 @@
 import React, { useState } from 'react';
-import {
-  CModal,
-  CModalBody,
-  CModalFooter,
-  CModalHeader,
-  CButton,
-  CFormInput,
-  CFormTextarea,
-  CFormSelect,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-  CContainer,
-  CRow,
-  CCol,
-} from '@coreui/react';
-import CIcon from '@coreui/icons-react';
-import { cilTrash } from '@coreui/icons';
+import { TextField, Button, Grid, Box, Select, MenuItem } from '@mui/material';
+import ModalContent from '../../components/ModalContent';
+import TabController from '../../components/TabController';
+import dayjs from 'dayjs';
 
+import DataTable from '../../components/DataTable';
+import { Add, Check, Person } from '@material-ui/icons';
 const Support = () => {
-  const [tickets, setTickets] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [confirmationVisible, setConfirmationVisible] = useState(false); // Nouveau state pour le modal de confirmation
-  const [subject, setSubject] = useState('');
-  const [product, setProduct] = useState('');
-  const [description, setDescription] = useState('');
-  const [errors, setErrors] = useState({
+
+  const xcolumns=[
+    { title: 'N°', field: 'numTicket' },
+    { title: 'Start Date', field: 'startdate' },
+    { title: 'End Date', field: 'enddate'},
+    { title: 'Subject', field: 'subject'},
+    { title: 'Products', field: 'product'},
+    { title: 'Description', field: 'desc'},
+    
+  ];
+
+  const formatDate = (date) => {
+    return dayjs(date).format('MMMM D, YYYY h:mm A'); // Adjust format as needed
+  };
+  
+  const xdata=[
+    { numTicket: '1500', startdate: formatDate (new Date()), enddate: formatDate (new Date()), subject :'', product : '', desc : ''},
+    { numTicket: '1500', startdate: formatDate (new Date()) , enddate: formatDate (new Date()),subject :'', product : '', desc : ''},
+  ] ;
+
+
+  const [dataArray, setDataArray] = useState(xdata);
+
+  const [tabData, settabData] = useState([
+    {
+      id: 'tab1',
+      title: 'Not Approuved Tickets',
+      content:  <>
+       <DataTable DataList ={dataArray} columns ={xcolumns} collections = {""} noAdds={true} noEdit={true}/>
+      </>
+
+     ,
+    },
+    {
+      id: 'tab2',
+      title: 'Approuved Tickets',
+      content: <DataTable DataList ={xdata} columns ={xcolumns} collections = {""} noAdds={true} noEdit={true}/>,
+    },
+    {
+      id: 'tab3',
+      title: 'Opened Tickets',
+      content:<DataTable DataList ={xdata} columns ={xcolumns} collections = {""} noAdds={true} noEdit={true}/>,
+
+    },
+
+    {
+      id: 'tab4',
+      title: 'Closed Tickets',
+      content:<DataTable DataList ={xdata} columns ={xcolumns} collections = {""} noAdds={true} noEdit={true}/>,
+
+    },
+  ]);
+
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [formData, setFormData] = useState({
     subject: '',
     product: '',
-    description: '',
+    desc : ''
   });
-  const [ticketToDelete, setTicketToDelete] = useState(null); // Index du ticket à supprimer
 
-  const handleOpenModal = () => {
-    setModalVisible(true);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = { subject: '', product: '', description: '' };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    
+    const newData = { numTicket: '1501', startdate: formatDate (new Date()), enddate: formatDate (new Date())
+      ,subject :formData.subject, product : formData.product, desc : formData.desc
+    };
 
-    if (!subject.trim()) {
-      newErrors.subject = 'Subject is required';
-      isValid = false;
-    }
-    if (!product.trim()) {
-      newErrors.product = 'Product is required';
-      isValid = false;
-    }
-    if (!description.trim()) {
-      newErrors.description = 'Description is required';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
+    setDataArray(prevDataArray => {
+      const updatedDataArray = [...prevDataArray, newData];
+      // Update the relevant tab content
+      const updatedTabData = tabData.map(tab => {
+        if (tab.id === 'tab1') {
+          return { ...tab, content: <DataTable DataList={updatedDataArray} columns={xcolumns} collections="" noAdds={true} noEdit={true} /> };
+        }
+        return tab;
+      });
+      settabData(updatedTabData);
+      return updatedDataArray;
+    });
+    
+    setFormData({
+      subject: '',
+      product: '',
+      desc: ''
+    });
+    
   };
-
-  const handleSendTicket = () => {
-    if (validateForm()) {
-      setTickets([...tickets, { subject, lastReply: '', status: 'En cours de traitement' }]);
-      setModalVisible(false);
-      setSubject('');
-      setProduct('');
-      setDescription('');
-      setErrors({ subject: '', product: '', description: '' });
-    }
-  };
-
-  const confirmDeleteTicket = (index) => {
-    setTicketToDelete(index);
-    setConfirmationVisible(true);
-  };
-
-  const handleDeleteTicket = () => {
-    const updatedTickets = tickets.filter((_, i) => i !== ticketToDelete);
-    setTickets(updatedTickets);
-    setConfirmationVisible(false);
-    setTicketToDelete(null);
-  };
-
   return (
-    <CContainer className="mt-2">
-      <CRow className="justify-content-between align-items-center mb-3">
-        <CCol className="mb-4">
-          <h2 style={{ fontSize: '22px' }}>Support Tickets</h2>
-          <div style={{ width: '155px', height: '1px', backgroundColor: '#007bff', marginTop: '9px' }}></div>
-        </CCol>
-        <CCol className="text-end">
-          <CButton style={{ color: '#007bff' }} onClick={handleOpenModal}>
-            + Open Ticket
-          </CButton>
-        </CCol>
-      </CRow>
-      <CTable hover responsive  style={{ borderRadius: '0.5rem', overflow: 'hidden'}}>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Subject</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Last Reply</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          {tickets.length === 0 ? (
-            <CTableRow>
-              <CTableDataCell colSpan="4" className="text-center">
-                No Tickets Found
-              </CTableDataCell>
-            </CTableRow>
-          ) : (
-            tickets.map((ticket, index) => (
-              <CTableRow key={index}>
-                <CTableDataCell>{ticket.subject}</CTableDataCell>
-                <CTableDataCell>{ticket.lastReply}</CTableDataCell>
-                <CTableDataCell>{ticket.status}</CTableDataCell>
-                <CTableDataCell>
-                  <span
-                    onClick={() => confirmDeleteTicket(index)}
-                    style={{ cursor: 'pointer', color: 'red', marginLeft: '10px' }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </span>
-                </CTableDataCell>
-              </CTableRow>
-            ))
-          )}
-        </CTableBody>
-      </CTable>
+      <>
 
-      {/* Modal de confirmation */}
-      <CModal visible={confirmationVisible} onClose={() => setConfirmationVisible(false)} backdrop="static">
-        <CModalHeader>Confirmation</CModalHeader>
-        <CModalBody>
-          Êtes-vous sûr de vouloir supprimer ce ticket ?
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setConfirmationVisible(false)}>Annuler</CButton>
-          <CButton color="danger" onClick={handleDeleteTicket}>Supprimer</CButton>
-        </CModalFooter>
-      </CModal>
-
-      {/* Modal d'ajout de ticket */}
-      <CModal visible={modalVisible} onClose={() => setModalVisible(false)} backdrop="static">
-        <CModalHeader>Open New Ticket</CModalHeader>
-        <CModalBody>
-          <CFormInput
-            type="text"
-            label="Ticket Subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
+<div>
+    <Box pb ={1}>
+    <Button variant="contained" startIcon={<Add />} onClick={handleClickOpen}>
+      New Ticket
+    </Button>
+    </Box>
+    <ModalContent open={open} onClose={handleClose} title = {"New Ticket"} content = {
+      <Box p ={1}>
+        <form onSubmit={handleSubmit}>
+       <Grid container spacing={1}>
+         <Grid item xs={12}>
+           <TextField
+             label="Subject"
+             name='subject'
+             value={formData.subject}
+             onChange={handleChange}
+             fullWidth
+             required
+           />
+         </Grid>
+         <Grid item xs={12}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            fullWidth
+            value={formData.product}
+            onChange={handleChange}
+            name='product'
             required
-            invalid={!!errors.subject}
-            feedback={errors.subject}
-          />
-          <CFormSelect
-            label="Product"
-            value={product}
-            onChange={(e) => setProduct(e.target.value)}
-            required
-            invalid={!!errors.product}
-            feedback={errors.product}
+          
           >
-            <option>Select Product</option>
-            <option value="Product 1">Product 1</option>
-            <option value="Product 2">Product 2</option>
-          </CFormSelect>
-          <CFormTextarea
-            label="Problem Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            invalid={!!errors.description}
-            feedback={errors.description}
-          />
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setModalVisible(false)}>Cancel</CButton>
-          <CButton color="primary" onClick={handleSendTicket}>Send Ticket</CButton>
-        </CModalFooter>
-      </CModal>
-    </CContainer>
+            <MenuItem value={10}>Product 1</MenuItem>
+            <MenuItem value={20}>Product 2</MenuItem>
+          </Select>
+         </Grid>
+
+         <Grid item xs={12}>
+           <TextField
+             label="Description"
+             name='desc'
+             value={formData.desc}
+             onChange={handleChange}
+             multiline
+             maxRows={4}
+             fullWidth
+             required
+           />
+         </Grid>
+
+         <Grid item xs={12}>
+          <Box display="flex" justifyContent="flex-end">
+          <Button type="submit" variant="contained"  endIcon={<Check />}>
+                Submit
+              </Button>
+          </Box>            
+        </Grid>
+        </Grid>
+         
+         
+          
+          </form>
+      </Box>
+       
+    } />
+</div>
+
+
+<TabController tabs={tabData} />
+      </>
   );
 };
 
